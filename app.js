@@ -21,8 +21,10 @@ app.get('/verifier/generate-auth-request-qr', async (req, res) => {
     nonce = crypto.randomBytes(16).toString('base64');
     state = crypto.randomBytes(16).toString('base64');
 
-    const authorizationRequest = `OPENID4VP://authorize?client_id=https%3A%2F%2Fclient.example.org%2Fcb&presentation_definition=${presentation_definition}&response_type=vp_token&response_mode=direct_post&nonce=${nonce}&state=${state}&response_uri=/verifier/vp-response HTTP/1.1`;
-    const qrCodeData = await QRCode.toDataURL(authorizationRequest);
+    const authorizationRequest = `client_id=https://injiverify.dev1.mosip.net&presentation_definition=${presentation_definition}&response_type=vp_token&response_mode=direct_post&nonce=${nonce}&state=${state}&response_uri=https://9055-2405-201-c058-b814-81ee-2d4-a331-aa1c.ngrok-free.app/verifier/vp-response`;
+    const qrCodeData = await QRCode.toDataURL(
+      'openid4vp://authorize?' + btoa(authorizationRequest)
+    );
 
     res.render('index', { title: 'Home', qrCodeData });
   } catch (error) {
