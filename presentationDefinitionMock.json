@@ -1,16 +1,30 @@
 {
   "id": "vp token example",
   "purpose": "Relying party is requesting your digital ID for the purpose of Self-Authentication",
+  "format": {
+    "ldp_vc": {
+      "proof_type": [
+        "RSASignature2018"
+      ]
+    }
+  },
   "input_descriptors": [
     {
       "id": "id card credential",
+      "format": {
+        "ldp_vc": {
+          "proof_type": [
+            "Ed25519Signature2020"
+          ]
+        }
+      },
       "constraints": {
         "fields": [
           {
             "path": ["$.credentialSubject.email"],
             "filter": {
               "type": "string",
-              "pattern": "@mosip.com"
+              "pattern": "@gmail.com"
             }
           }
         ]
