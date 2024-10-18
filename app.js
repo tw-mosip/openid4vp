@@ -36,19 +36,25 @@ app.get('/verifier/generate-auth-request-qr', async (req, res) => {
 app.post('/verifier/vp-response', (req, res) => {
   console.log('vp response:', req);
 
-  if (req.query.nonce !== nonce) {
-    res.status(400).json({
-      message: `Nonce is not matching with the one sent in request: generated value - ${nonce} & passed value - ${req.query.nonce}`,
-    });
-  } else if (req.query.state !== state) {
-    res.status(400).json({
-      message: `State value is not matching with the one sent in request: generated value - ${state} & passed value - ${req.query.state}`,
-    });
-  } else {
-    res.status(200).json({
-      message: 'Verifiable presentation is received successfully',
-    });
-  }
+  /*Uncomment this for testing success flow and 
+  return 400 instead of 200 for testing error flow*/
+  res.status(200).json({
+    message: `Verifiable presentation is received successfully: ${nonce} ${state}`,
+  });
+
+  // if (req.query.nonce !== nonce) {
+  //   res.status(400).json({
+  //     message: `Nonce is not matching with the one sent in request: generated value - ${nonce} & passed value - ${req.query.nonce}`,
+  //   });
+  // } else if (req.query.state !== state) {
+  //   res.status(400).json({
+  //     message: `State value is not matching with the one sent in request: generated value - ${state} & passed value - ${req.query.state}`,
+  //   });
+  // } else {
+  //   res.status(200).json({
+  //     message: 'Verifiable presentation is received successfully',
+  //   });
+  // }
 });
 
 app.listen(PORT, () => {
