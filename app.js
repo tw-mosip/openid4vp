@@ -18,10 +18,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/verifier/generate-auth-request-qr', async (req, res) => {
   try {
     const presentation_definition = JSON.stringify(presentationDefinition);
+    const client_metadata = JSON.stringify({ 'name': 'Requester name' });
     nonce = crypto.randomBytes(16).toString('base64');
     state = crypto.randomBytes(16).toString('base64');
 
-    const authorizationRequest = `client_id=https://injiverify.dev1.mosip.net&presentation_definition=${presentation_definition}&response_type=vp_token&response_mode=direct_post&nonce=${nonce}&state=${state}&response_uri=https://9055-2405-201-c058-b814-81ee-2d4-a331-aa1c.ngrok-free.app/verifier/vp-response`;
+    const authorizationRequest = `client_id=https://injiverify.dev1.mosip.net&presentation_definition=${presentation_definition}&response_type=vp_token&response_mode=direct_post&nonce=${nonce}&state=${state}&response_uri=https://f0c2-2405-201-c058-b814-f1e4-f5de-f8a0-abbd.ngrok-free.app/verifier/vp-response&client_metadata=${client_metadata}`;
     const qrCodeData = await QRCode.toDataURL(
       'openid4vp://authorize?' + btoa(authorizationRequest)
     );
@@ -34,8 +35,6 @@ app.get('/verifier/generate-auth-request-qr', async (req, res) => {
 });
 
 app.post('/verifier/vp-response', (req, res) => {
-  console.log('vp response:', req);
-
   /*Uncomment this for testing success flow and 
   return 400 instead of 200 for testing error flow*/
   res.status(200).json({
