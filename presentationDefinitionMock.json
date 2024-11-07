@@ -4,7 +4,7 @@
   "format": {
     "ldp_vc": {
       "proof_type": [
-        "RSASignature2018"
+        "RsaSignature2018"
       ]
     }
   },

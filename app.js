@@ -3,12 +3,13 @@ const path = require('path');
 const QRCode = require('qrcode');
 const crypto = require('crypto');
 const presentationDefinition = require('./presentationDefinitionMock.json');
-
+const bodyParser = require('body-parser');
 const app = express();
 const PORT = 3000;
 
 var nonce, state;
 
+app.use(bodyParser.urlencoded({ limit: '20mb', extended: true }));
 app.set('view engine', 'ejs');
 
 app.set('views', path.join(__dirname, 'views'));
@@ -37,6 +38,9 @@ app.get('/verifier/generate-auth-request-qr', async (req, res) => {
 app.post('/verifier/vp-response', (req, res) => {
   /*Uncomment this for testing success flow and 
   return 400 instead of 200 for testing error flow*/
+  console.log('vp_token:', req.body.vp_token);
+  console.log('presentation_submission:', req.body.presentation_submission);
+  
   res.status(200).json({
     message: `Verifiable presentation is received successfully: ${nonce} ${state}`,
   });
