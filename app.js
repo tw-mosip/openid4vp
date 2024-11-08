@@ -42,22 +42,8 @@ app.post('/verifier/vp-response', (req, res) => {
   console.log('presentation_submission:', req.body.presentation_submission);
   
   res.status(200).json({
-    message: `Verifiable presentation is received successfully: ${nonce} ${state}`,
+    message: `Verifiable presentation is received successfully.`,
   });
-
-  // if (req.query.nonce !== nonce) {
-  //   res.status(400).json({
-  //     message: `Nonce is not matching with the one sent in request: generated value - ${nonce} & passed value - ${req.query.nonce}`,
-  //   });
-  // } else if (req.query.state !== state) {
-  //   res.status(400).json({
-  //     message: `State value is not matching with the one sent in request: generated value - ${state} & passed value - ${req.query.state}`,
-  //   });
-  // } else {
-  //   res.status(200).json({
-  //     message: 'Verifiable presentation is received successfully',
-  //   });
-  // }
 });
 
 app.listen(PORT, () => {
